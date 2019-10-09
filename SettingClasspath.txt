@@ -1,0 +1,13 @@
+user@delegate-ThinkCentre-M710s:~/Desktop/sathurshan/java/001/company$ export CLASSPATH=:~/Desktop/sathurshan/java/001/employee
+user@delegate-ThinkCentre-M710s:~/Desktop/sathurshan/java/001/company$ javac Application.java
+user@delegate-ThinkCentre-M710s:~/Desktop/sathurshan/java/001/company$ java Application
+Sathurshan
+Virtusa
+
+user@delegate-ThinkCentre-M710s:~/Desktop/sathurshan/java/001/company$ javac -classpath ~/Desktop/sathurshan/java/001/employee/:~/Desktop/sathurshan/java/001/company/: Application.java
+user@delegate-ThinkCentre-M710s:~/Desktop/sathurshan/java/001/company$ java -classpath ~/Desktop/sathurshan/java/001/employee/:~/Desktop/sathurshan/java/001/company/: Application
+Sathurshan
+Virtusa
+
+
+

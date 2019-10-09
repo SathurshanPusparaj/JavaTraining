@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <header>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="css/style.css" />
+        <title>StudentById</title>
+    </header>
+    <Body>
+    <div class="container">
+        <div id="lead">
+            <span>Welcome</span>
+            <span th:text="${username}"></span>
+        </div>
+        <div id="banner">
+            <h1>Student Find by ID</h1>
+        </div><br>
+        <div id="switches">
+            <a href="/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Home</a>
+            <a href="/showformadd" class="btn btn-primary btn-lg active " role="button" aria-pressed="true">Create</a>
+            <a href="/showformid" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">FetchById</a>
+            <a href="/showformall" class="btn btn-primary btn-lg active " role="button" aria-pressed="true">FetchAll</a>
+        </div><br>
+        <div id="searchform">
+                <form action="#" th:action="@{/findbyid}" th:object="${student}" method="POST">
+                        <div class="form-inline form-group" >
+                            <label class="col-lg-2 col-md-2 col-sm-1">ID</label>
+                            <input type="text" class="col-lg-5 col-md-5 col-sm-10 form-control" placeholder="Enter the ID" th:field="*{sid}">
+                            <button type="submit" class="btn btn-primary col-lg-1 col-md-2 col-sm-10" style="margin-left:10px;">Submit</button>
+                        </div>
+                </form>
+        </div>
+        <br/>
+        <div th:unless="${findname==null}" id="searchresult">
+            <h3>Search Results</h3>
+            <hr>
+            <h4 th:text="'StudentName: '+ ${findname}"></h4>
+        </div>
+    </div>
+    </Body>
+</html>

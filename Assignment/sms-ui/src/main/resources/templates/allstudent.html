@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <header>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="css/style.css" />
+        <title>All Student</title>
+    </header>
+    <Body>
+    <div class="container">
+        <div id="lead">
+            <span>Welcome</span>
+            <span th:text="${username}"></span>
+        </div>
+        <div id="banner">
+            <h1>All Student</h1>
+        </div><br>
+        <div id="switches">
+            <a href="/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Home</a>
+            <a href="/showformadd" class="btn btn-primary btn-lg active " role="button" aria-pressed="true">Create</a>
+            <a href="/showformid" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">FetchById</a>
+            <a href="/showformall" class="btn btn-primary btn-lg active " role="button" aria-pressed="true">FetchAll</a>
+        </div><br>
+        <div th:if="{error==null}">
+                <ul class="list-group" th:each="item:${Allusers}">
+                    <li class="list-group-item"  th:text="${item.Name}"></li>
+                </ul>
+        </div>
+        <div th:unless="{error==null}">
+            <ul class="list-group">
+                <li class="list-group-item"  th:text="${error.statusCode}"></li>
+                <li class="list-group-item"  th:text="${error.body}"></li>
+            </ul>
+        </div>
+    </div>
+    </Body>
+</html>

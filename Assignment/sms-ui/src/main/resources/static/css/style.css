@@ -1,0 +1,29 @@
+h1{
+    text-align:center;
+    color: white;
+}
+#jumbo{
+    background-color: #563D7C;
+    margin: 10px;
+}
+#switches{
+    width: 40%;
+    display: flex;
+    margin:0 auto;
+}
+a{
+    margin: 5px;
+}
+#banner{
+    background-color: #563D7C;
+    padding: 25px;
+}
+#searchform{
+    margin-top:100px;
+}
+#searchresult{
+    position:relative;
+    width:50%;
+    margin:0 auto;
+    text-align:center;
+}

@@ -1,0 +1,6 @@
+interface vs total abstract class
+
+you can implements 2 or more interfaces
+but you cannot extends two abstract class it will violate the principle
+
+

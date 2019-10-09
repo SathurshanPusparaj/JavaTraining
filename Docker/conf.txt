@@ -1,0 +1,41 @@
+sudo docker build -t web-dev . //. means dockerfile in same place in the terminal
+
+sudo docker run -p 80:80 web-dev //redirect to port 80
+
+sudo docker ps //to see the running container
+
+sudo docker exec -t -i  d14efb70d80c /bin/bash  //How to Go Inside a Docker Container
+
+sudo docker images
+REPOSITORY             TAG                 IMAGE ID            CREATED              SIZE
+<none>                 <none>              f6f8f7a75e0e        About a minute ago   675MB
+web-dev                latest              b118a0ce18c4        2 hours ago      
+
+sudo docker rmi f6f8f7a75e0e //remove the docker image
+ 
+sudo docker ps -a //To see the running containers
+  
+sudo docker rm 496f04440e6e //remove the comtainers
+  
+
+sudo docker ps
+
+sudo docker inspect <contanier ID> //to find ip address
+
+
+sudo docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=1qaz2wsx@ -e MYSQL_DATABASE=authDB -e MYSQL_USER=user -e MYSQL_PASSWORD=1234 -d mysql:5.7.26 //using mysql
+  
+
+docker ps
+CONTAINER ID  IMAGE    COMMAND  CREATED      STATUS      PORTS  NAMES
+72ca2488b353  my_image          X hours ago  Up X hours         my_container
+
+docker stop 72ca2488b353 // stop the container
+
+docker container prune // remove all stopped containers
+
+docker images prune // remove all images
+
+
+ References
+ https://stackabuse.com/dockerizing-a-spring-boot-application/

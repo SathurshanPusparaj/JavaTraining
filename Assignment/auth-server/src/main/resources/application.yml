@@ -1,0 +1,28 @@
+server:
+  port: 8484
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+
+#spring:
+  #security:
+    #user:
+     # name: sathu
+      #password: sathu123
+      #roles: ADMIN,USER
+
+#security:
+  #oauth2:
+    #client:
+     # client-id: mobile
+     # client-secret: pin
+     # access-token-validity-seconds: 3600
+     # authorized-grant-types: refresh_token,authorization_code,password,client_credentials
+     # scope: READ,WRITE
+   # authorization:
+      #check-token-access: permitAll
+
+

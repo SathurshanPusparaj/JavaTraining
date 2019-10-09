@@ -1,0 +1,4 @@
+https://datatables.net/examples/styling/
+
+@NaturalIdCache
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

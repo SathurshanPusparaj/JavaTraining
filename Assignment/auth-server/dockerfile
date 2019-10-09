@@ -1,0 +1,5 @@
+From java:8
+WORKDIR /usr/app
+copy ./target/auth-server-0.0.1-SNAPSHOT.jar /usr/app
+run sh -c 'touch auth-server-0.0.1-SNAPSHOT.jar'
+ENTRYPOINT ["java","-jar","auth-server-0.0.1-SNAPSHOT.jar"]
