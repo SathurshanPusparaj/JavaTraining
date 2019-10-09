@@ -25,11 +25,6 @@ public class ProjectUiController {
     @Autowired
     RestTemplate restTemplate;
 
-    @RequestMapping(value = "/",method = RequestMethod.GET)
-    String gethomepage(){
-        return "index";
-    }
-
     String status = null;
 
     @RequestMapping(value = "/projects",method = RequestMethod.GET)

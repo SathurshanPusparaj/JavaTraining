@@ -30,6 +30,13 @@ public class Employee {
     @OneToMany(mappedBy = "employee",fetch = FetchType.LAZY)
     List<ProjectTask> projectTasks;
 
+    public Employee() {
+    }
+
+    public Employee(Integer empid){
+        this.empid = empid;
+    }
+
     public List<ProjectTask> getProjectTasks() {
         return projectTasks;
     }

@@ -39,7 +39,7 @@ public class OperationUiController {
         model.addAttribute("employee",new Employee());
         model.addAttribute("project",new Projects());
         model.addAttribute("task",new Task());
-        model.addAttribute("projectTask",new EmpProjectTask());
+        model.addAttribute("empProjectTask",new EmpProjectTask());
 
         if(status!=null){
             model.addAttribute("status",status);
@@ -51,10 +51,6 @@ public class OperationUiController {
 
     @RequestMapping(value = "/operations",method = RequestMethod.POST)
     String postAllmapping(@ModelAttribute("projectTask") EmpProjectTask empProjectTask){
-
-        System.out.println(empProjectTask.getEmpid());
-        System.out.println(empProjectTask.getPid());
-        System.out.println(empProjectTask.getTid());
 
         try{
             ResponseEntity<EmpProjectTask> saveProject = restTemplate.postForEntity("http://localhost:8484/operations",empProjectTask,EmpProjectTask.class);

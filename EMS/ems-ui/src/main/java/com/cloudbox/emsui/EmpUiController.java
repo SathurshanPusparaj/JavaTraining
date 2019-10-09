@@ -1,6 +1,7 @@
 package com.cloudbox.emsui;
 
 import com.cloudbox.models_service.models.Employee;
+import com.cloudbox.models_service.models.ProjectTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
@@ -22,11 +23,6 @@ public class EmpUiController {
 
     @Autowired
     private RestTemplate restTemplate;
-
-    /*@RequestMapping(value = "/",method = RequestMethod.GET)
-    String gethomepage(){
-        return "index";
-    }*/
 
     @RequestMapping(value = "/employees",method = RequestMethod.GET)
     String getAllEmployee(Model model){
@@ -74,7 +70,11 @@ public class EmpUiController {
     String findByidEmployee(@PathVariable Integer id, Model model){
 
         ResponseEntity<Employee> employee = restTemplate.exchange("http://localhost:8181/employees/"+id, HttpMethod.GET,new HttpEntity<Employee>(new HttpHeaders()),Employee.class);
-        System.out.println();
+
+       for(ProjectTask projectTask:employee.getBody().getProjectTasks()){
+            System.out.println(projectTask.getEmpProjectTask().getPid());
+        }
+
         model.addAttribute("employee",employee.getBody());
         return "employee_info";
     }

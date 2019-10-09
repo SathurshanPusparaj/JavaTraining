@@ -22,23 +22,31 @@ public class ProjectTask {
 
     @ManyToOne
     @MapsId("pid")
-    @JsonIgnore
     @JoinColumn(name = "pid", referencedColumnName = "pid")
+    @JsonIgnore
     private Projects projects;
 
     @ManyToOne
     @MapsId("tid")
-    @JsonIgnore
     @JoinColumn(name = "tid", referencedColumnName = "tid")
+    @JsonIgnore
     private Task task;
 
     public ProjectTask() {
+    }
+
+    public ProjectTask(EmpProjectTask empProjectTask) {
+        this.empProjectTask = empProjectTask;
     }
 
     public ProjectTask(Employee employee, Projects projects, Task task) {
         this.employee = employee;
         this.projects = projects;
         this.task = task;
+    }
+
+    public EmpProjectTask getEmpProjectTask() {
+        return empProjectTask;
     }
 
     public void setEmpProjectTask(EmpProjectTask empProjectTask) {
@@ -67,5 +75,14 @@ public class ProjectTask {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectTask{" +
+                "employee=" + employee +
+                ", projects=" + projects +
+                ", task=" + task +
+                '}';
     }
 }

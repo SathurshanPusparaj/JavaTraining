@@ -19,33 +19,19 @@ public class OperationController {
     @RequestMapping(value = "/operate",method = RequestMethod.GET)
     void dummyOperation(){
 
-        Employee emp = new Employee();
-        emp.setEmpid(1);
+        Employee emp = new Employee(1);
+        Projects pro = new Projects(1);
+        Task task = new Task(1);
 
-        Projects pro = new Projects();
-        pro.setPid(1);
-
-        Task task = new Task();
-        task.setTid(1);
         operationService.save(new ProjectTask(emp,pro,task));
     }
 
     @RequestMapping(value = "/operations",method = RequestMethod.POST)
     ProjectTask saveOperation(@RequestBody EmpProjectTask empProjectTask){
 
-        System.out.println(empProjectTask.getEmpid());
-        System.out.println(empProjectTask.getPid());
-        System.out.println(empProjectTask.getTid());
-
-        Employee emp = new Employee();
-        emp.setEmpid(empProjectTask.getEmpid());
-
-        Projects project = new Projects();
-        project.setPid(empProjectTask.getPid());
-
-        Task task = new Task();
-        task.setTid(task.getTid());
-
+        Employee emp = new Employee(empProjectTask.getEmpid());
+        Projects project = new Projects(empProjectTask.getPid());
+        Task task = new Task(empProjectTask.getTid());
          return operationService.save(new ProjectTask(emp,project,task));
     }
 }

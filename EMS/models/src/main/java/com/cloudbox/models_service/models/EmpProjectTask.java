@@ -2,6 +2,7 @@ package com.cloudbox.models_service.models;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class EmpProjectTask implements Serializable {
@@ -43,5 +44,20 @@ public class EmpProjectTask implements Serializable {
 
     public void setTid(Integer tid) {
         this.tid = tid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmpProjectTask that = (EmpProjectTask) o;
+        return Objects.equals(empid, that.empid) &&
+                Objects.equals(pid, that.pid) &&
+                Objects.equals(tid, that.tid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(empid, pid, tid);
     }
 }

@@ -20,6 +20,13 @@ public class Task {
     @OneToMany(mappedBy = "task",cascade = CascadeType.ALL)
     private List<ProjectTask> tasks;
 
+    public Task() {
+    }
+
+    public Task(Integer tid){
+        this.tid=tid;
+    }
+
     public List<ProjectTask> getTasks() {
         return tasks;
     }

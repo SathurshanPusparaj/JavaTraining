@@ -25,6 +25,13 @@ public class Projects {
     @OneToMany(mappedBy = "projects",cascade = CascadeType.ALL)
     private List<ProjectTask> projectTasks;
 
+    public Projects() {
+    }
+
+    public Projects(Integer pid){
+        this.pid = pid;
+    }
+
     public List<ProjectTask> getProjectTasks() {
         return projectTasks;
     }
