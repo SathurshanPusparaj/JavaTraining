@@ -1,8 +1,6 @@
 package com.cloudbox.emsui;
 
-import com.cloudbox.models_service.models.Employee;
-import com.cloudbox.models_service.models.Projects;
-import com.cloudbox.models_service.models.Task;
+import com.cloudbox.models_service.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,10 +11,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.logging.Logger;
 
 @Controller
 public class OperationUiController {
+
+    String status = null;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -36,11 +39,31 @@ public class OperationUiController {
         model.addAttribute("employee",new Employee());
         model.addAttribute("project",new Projects());
         model.addAttribute("task",new Task());
+        model.addAttribute("projectTask",new EmpProjectTask());
+
+        if(status!=null){
+            model.addAttribute("status",status);
+            status=null;
+        }
 
         return "operations";
     }
+
     @RequestMapping(value = "/operations",method = RequestMethod.POST)
-    String postAllmapping(@ModelAttribute("employee") Employee employee,@ModelAttribute("project") Projects projects,@ModelAttribute("task") Task task  ){
+    String postAllmapping(@ModelAttribute("projectTask") EmpProjectTask empProjectTask){
+
+        System.out.println(empProjectTask.getEmpid());
+        System.out.println(empProjectTask.getPid());
+        System.out.println(empProjectTask.getTid());
+
+        try{
+            ResponseEntity<EmpProjectTask> saveProject = restTemplate.postForEntity("http://localhost:8484/operations",empProjectTask,EmpProjectTask.class);
+            status="active";
+        }catch (HttpStatusCodeException ex){
+            Logger logger = Logger.getLogger(EmpUiController.class.getName());
+            logger.warning(ex.toString());
+            status="error";
+        }
 
         return "redirect:/operations";
     }

@@ -37,6 +37,7 @@ public class Employee {
     public void setProjectTasks(List<ProjectTask> projectTasks) {
         this.projectTasks = projectTasks;
     }
+
     public Integer getEmpid() {
         return empid;
     }

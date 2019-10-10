@@ -32,7 +32,6 @@ public class ProjectUiController {
 
     String status = null;
 
-
     @RequestMapping(value = "/projects",method = RequestMethod.GET)
     String getAllProjects(Model model){
 

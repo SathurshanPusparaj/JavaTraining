@@ -3,31 +3,33 @@ package com.cloudbox.models_service.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
+
 
 @Entity
 @Table(name="project_task")
-public class ProjectTask implements Serializable {
+public class ProjectTask {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @EmbeddedId
+    private EmpProjectTask empProjectTask = new EmpProjectTask();
 
     @ManyToOne
-    @JoinColumn
+    @MapsId("empid")
+    @JoinColumn(name = "empid", referencedColumnName = "empid")
     @JsonIgnore
     private Employee employee;
 
     @ManyToOne
-    @JoinColumn
+    @MapsId("pid")
     @JsonIgnore
+    @JoinColumn(name = "pid", referencedColumnName = "pid")
     private Projects projects;
 
     @ManyToOne
-    @JoinColumn
+    @MapsId("tid")
     @JsonIgnore
+    @JoinColumn(name = "tid", referencedColumnName = "tid")
     private Task task;
 
     public ProjectTask() {
@@ -39,12 +41,8 @@ public class ProjectTask implements Serializable {
         this.task = task;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setEmpProjectTask(EmpProjectTask empProjectTask) {
+        this.empProjectTask = empProjectTask;
     }
 
     public Projects getProjects() {
