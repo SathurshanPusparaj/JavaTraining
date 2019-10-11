@@ -3,8 +3,11 @@ package com.cloudbox.emsui;
 import com.cloudbox.models_service.models.Employee;
 import com.cloudbox.models_service.models.ProjectTask;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,17 +20,37 @@ import java.util.logging.Logger;
 
 
 @Controller
-public class EmpUiController {
+@EnableOAuth2Sso
+public class EmpUiController extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/")
+                .permitAll()
+                .anyRequest().authenticated();
+    }
 
     String status=null;
 
     @Autowired
     private RestTemplate restTemplate;
 
+    @RequestMapping(value = "/",method = RequestMethod.GET)
+    String gethomepage(){
+        return "index";
+    }
+
     @RequestMapping(value = "/employees",method = RequestMethod.GET)
     String getAllEmployee(Model model){
 
-        ResponseEntity<Employee[]> emplist = restTemplate.exchange("http://localhost:8181/employees", HttpMethod.GET,new HttpEntity<Employee>(new HttpHeaders()),Employee[].class);
+        System.out.println("dfsdfsdf");
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", AccessTokenConfigurer.getToken());
+        HttpEntity<Employee> httpEntity = new HttpEntity<Employee>(httpHeaders);
+
+        ResponseEntity<Employee[]> emplist = restTemplate.exchange("http://localhost:8181/employees", HttpMethod.GET,httpEntity,Employee[].class);
 
         model.addAttribute("employee",new Employee());
         model.addAttribute("employees",emplist.getBody());

@@ -3,16 +3,33 @@ package com.cloudbox.emsservice.Controller;
 import com.cloudbox.emsservice.Service.EmployeeServiceInf;
 import com.cloudbox.models_service.models.Employee;
 import com.cloudbox.models_service.models.ProjectTask;
+import com.cloudbox.models_service.models.Projects;
+import com.cloudbox.models_service.models.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class EmployeeController {
+
+    @Bean
+    RestTemplate getrestTemplate(){
+        return new RestTemplate();
+    }
+
+    @Autowired
+    RestTemplate restTemplate;
 
     @Autowired
     EmployeeServiceInf employeeServiceInf;
@@ -44,6 +61,23 @@ public class EmployeeController {
         }
 
     }
+
+    @RequestMapping(value = "/employees/{id}/projects",method = RequestMethod.GET)
+    List<Projects> getEmployeeProjects(@PathVariable Integer id){
+
+        ResponseEntity<Projects[]> projectlist = restTemplate.exchange("http://localhost:8484/operations/employees/"+id+"/projects", HttpMethod.GET,new HttpEntity<Projects>(new HttpHeaders()),Projects[].class);
+
+        return Arrays.asList(projectlist.getBody());
+    }
+
+    @RequestMapping(value = "/employees/{eid}/projects/{pid}",method = RequestMethod.GET)
+    List<Task> getTask(@PathVariable Integer eid,@PathVariable Integer pid){
+        ResponseEntity<Task[]> tasklist = restTemplate.exchange("http://localhost:8484/operations/employees/"+eid+"/projects/"+pid, HttpMethod.GET,new HttpEntity<Task>(new HttpHeaders()),Task[].class);
+
+        return Arrays.asList(tasklist.getBody());
+    }
+
+
     @RequestMapping(value = "/employ",method = RequestMethod.GET)
     void createEmployee(){
         Employee emp = new Employee();
