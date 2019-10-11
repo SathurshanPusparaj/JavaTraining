@@ -20,40 +20,42 @@ import java.util.logging.Logger;
 
 
 @Controller
-@EnableOAuth2Sso
-public class EmpUiController extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/")
-                .permitAll()
-                .anyRequest().authenticated();
-    }
+public class EmpUiController {
 
     String status=null;
 
     @Autowired
     private RestTemplate restTemplate;
 
+
+    HttpHeaders gethttpheaders(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", AccessTokenConfigurer.getToken());
+        return  httpHeaders;
+    }
+
+    HttpEntity gethttpEntity(){
+        return new HttpEntity<Employee>(gethttpheaders());
+    }
+
     @RequestMapping(value = "/",method = RequestMethod.GET)
-    String gethomepage(){
+    String getindexpage(){
         return "index";
+    }
+
+    @RequestMapping(value = "/home",method = RequestMethod.GET)
+    String gethomepage(){
+        return "home";
     }
 
     @RequestMapping(value = "/employees",method = RequestMethod.GET)
     String getAllEmployee(Model model){
 
-        System.out.println("dfsdfsdf");
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", AccessTokenConfigurer.getToken());
-        HttpEntity<Employee> httpEntity = new HttpEntity<Employee>(httpHeaders);
-
-        ResponseEntity<Employee[]> emplist = restTemplate.exchange("http://localhost:8181/employees", HttpMethod.GET,httpEntity,Employee[].class);
+        ResponseEntity<Employee[]> emplist = restTemplate.exchange("http://localhost:8181/employees", HttpMethod.GET,gethttpEntity(),Employee[].class);
 
         model.addAttribute("employee",new Employee());
         model.addAttribute("employees",emplist.getBody());
+        model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
         model.addAttribute("error",null);
 
         if(status!=null){
@@ -65,8 +67,10 @@ public class EmpUiController extends WebSecurityConfigurerAdapter {
     @RequestMapping(value = "/employees",method = RequestMethod.POST)
     String saveEmployee(@ModelAttribute("employee") Employee employee){
 
+        HttpEntity<Employee> httpEntity = new HttpEntity<>(employee,gethttpheaders());
+
         try{
-            ResponseEntity<Employee> saveemp = restTemplate.postForEntity("http://localhost:8181/employees",employee,Employee.class);
+            ResponseEntity<Employee> saveemp = restTemplate.postForEntity("http://localhost:8181/employees",httpEntity,Employee.class);
             status="active";
         }catch (HttpStatusCodeException ex){
             Logger logger = Logger.getLogger(EmpUiController.class.getName());
@@ -80,7 +84,7 @@ public class EmpUiController extends WebSecurityConfigurerAdapter {
     String deleteEmployee(@PathVariable Integer id){
 
         try{
-            restTemplate.delete("http://localhost:8181/employees/"+id);
+            restTemplate.exchange("http://localhost:8181/employees/"+id,HttpMethod.DELETE,gethttpEntity(),Employee.class);
             status="del_active";
         }catch(HttpStatusCodeException ex){
             Logger logger = Logger.getLogger(EmpUiController.class.getName());
@@ -92,13 +96,14 @@ public class EmpUiController extends WebSecurityConfigurerAdapter {
     @RequestMapping(value = "/employees/{id}",method = RequestMethod.GET)
     String findByidEmployee(@PathVariable Integer id, Model model){
 
-        ResponseEntity<Employee> employee = restTemplate.exchange("http://localhost:8181/employees/"+id, HttpMethod.GET,new HttpEntity<Employee>(new HttpHeaders()),Employee.class);
+        ResponseEntity<Employee> employee = restTemplate.exchange("http://localhost:8181/employees/"+id, HttpMethod.GET,gethttpEntity(),Employee.class);
 
        for(ProjectTask projectTask:employee.getBody().getProjectTasks()){
             System.out.println(projectTask.getEmpProjectTask().getPid());
         }
 
         model.addAttribute("employee",employee.getBody());
+        model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
         return "employee_info";
     }
 }

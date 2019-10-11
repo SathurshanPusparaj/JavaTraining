@@ -25,16 +25,28 @@ public class ProjectUiController {
     @Autowired
     RestTemplate restTemplate;
 
+    HttpHeaders gethttpheaders(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", AccessTokenConfigurer.getToken());
+        return  httpHeaders;
+    }
+
+    HttpEntity gethttpEntity(){
+        return new HttpEntity<Projects>(gethttpheaders());
+    }
+
+
     String status = null;
 
     @RequestMapping(value = "/projects",method = RequestMethod.GET)
     String getAllProjects(Model model){
 
         try {
-            ResponseEntity<Projects[]> projectlist = restTemplate.exchange("http://localhost:8282/projects", HttpMethod.GET,new HttpEntity<Projects>(new HttpHeaders()),Projects[].class);
+            ResponseEntity<Projects[]> projectlist = restTemplate.exchange("http://localhost:8282/projects", HttpMethod.GET,gethttpEntity(),Projects[].class);
 
             model.addAttribute("project",new Projects());
             model.addAttribute("projects",projectlist.getBody());
+            model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
         }catch (HttpStatusCodeException ex){
             model.addAttribute("error",ex.toString());
         }
@@ -49,24 +61,27 @@ public class ProjectUiController {
     @RequestMapping(value = "/projects",method = RequestMethod.POST)
     String saveProject(@ModelAttribute("project") Projects project){
 
+        HttpEntity<Projects> httpEntity = new HttpEntity<>(project,gethttpheaders());
+
         try{
-            ResponseEntity<Projects> saveProject = restTemplate.postForEntity("http://localhost:8282/projects",project,Projects.class);
+            ResponseEntity<Projects> saveProject = restTemplate.postForEntity("http://localhost:8282/projects",httpEntity,Projects.class);
             status="active";
         }catch (HttpStatusCodeException ex){
-            Logger logger = Logger.getLogger(EmpUiController.class.getName());
+            Logger logger = Logger.getLogger(ProjectUiController.class.getName());
             logger.warning(ex.toString());
             status="error";
         }
-        return "redirect:/projects";
+        return "redirect:/project_list";
     }
     @RequestMapping(value = "/projects/{id}",method = RequestMethod.GET)
     String findByidProject(@PathVariable Integer id, Model model){
 
         try{
-            ResponseEntity<Projects> project = restTemplate.exchange("http://localhost:8282/projects/"+id, HttpMethod.GET,new HttpEntity<Projects>(new HttpHeaders()),Projects.class);
+            ResponseEntity<Projects> project = restTemplate.exchange("http://localhost:8282/projects/"+id, HttpMethod.GET,gethttpEntity(),Projects.class);
             model.addAttribute("findproject",project.getBody());
+            model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
         }catch (HttpStatusCodeException ex){
-            Logger logger = Logger.getLogger(EmpUiController.class.getName());
+            Logger logger = Logger.getLogger(ProjectUiController.class.getName());
             logger.warning(ex.toString());
         }
         return "project_info";
@@ -75,11 +90,11 @@ public class ProjectUiController {
     String deleteproject(@PathVariable Integer id, Model model){
 
         try{
-            restTemplate.delete("http://localhost:8282/projects/"+id);
+            restTemplate.delete("http://localhost:8282/projects/"+id,HttpMethod.DELETE,gethttpEntity(),Projects.class);
             status = "del_active";
         }catch (HttpStatusCodeException ex){
             status ="del_error";
-            Logger logger = Logger.getLogger(EmpUiController.class.getName());
+            Logger logger = Logger.getLogger(ProjectUiController.class.getName());
             logger.warning(ex.toString());
         }
         return "redirect:/project_list";

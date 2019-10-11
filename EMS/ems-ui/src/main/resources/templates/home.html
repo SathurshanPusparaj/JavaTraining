@@ -1,10 +1,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">
-
     <title>EMS</title>
 </head>
 <body>
@@ -17,14 +15,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/home">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/employees">Employee</a>
+                <a class="nav-link" href="/employees">Employee<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/projects">Projects<span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <a class="nav-link" href="/projects">Projects</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/tasks">Tasks</a>
@@ -50,23 +48,9 @@
         </ul>
     </div>
 </nav>
-
-<div class="card text-center container" style="margin-top:5%;">
-    <div class="card-header">
-        Project
-        <a th:href="@{/projects/delete/{id}(id=${findproject.pid})}" style="float:right;"><i class="material-icons">delete_outline</i></a>
-    </div>
-    <div class="card-body">
-        <h5 class="card-title"><span th:text="${findproject.projectName}" ></span><span class="badge badge-primary"th:text="${findproject.status}" style="margin-left:0.5%;"></span></h5>
-        <p class="card-text" th:text="${findproject.startDate}"></p>
-        <p class="card-text" th:text="${findproject.endDate}"></p>
-        <p class="card-text" th:text="${findproject.projectDescription}"></p>
-    </div>
-    <div class="card-footer text-muted">
-        ---------------------------
-    </div>
-</div>
-
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
 </body>
 </html>

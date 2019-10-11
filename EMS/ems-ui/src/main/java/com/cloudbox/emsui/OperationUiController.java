@@ -21,25 +21,36 @@ public class OperationUiController {
 
     String status = null;
 
+    HttpHeaders gethttpheaders(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", AccessTokenConfigurer.getToken());
+        return  httpHeaders;
+    }
+
+    HttpEntity gethttpEntity(){
+        return new HttpEntity<Employee>(gethttpheaders());
+    }
+
     @Autowired
     private RestTemplate restTemplate;
 
     @RequestMapping(value = "/operations",method = RequestMethod.GET)
     String mappingAll(Model model){
 
-        ResponseEntity<Employee[]> emplist = restTemplate.exchange("http://localhost:8181/employees", HttpMethod.GET,new HttpEntity<Employee>(new HttpHeaders()),Employee[].class);
+        ResponseEntity<Employee[]> emplist = restTemplate.exchange("http://localhost:8181/employees", HttpMethod.GET,gethttpEntity(),Employee[].class);
         model.addAttribute("employees",emplist.getBody());
 
-        ResponseEntity<Projects[]> projectlist = restTemplate.exchange("http://localhost:8282/projects", HttpMethod.GET,new HttpEntity<Projects>(new HttpHeaders()),Projects[].class);
+        ResponseEntity<Projects[]> projectlist = restTemplate.exchange("http://localhost:8282/projects", HttpMethod.GET,new HttpEntity<Projects>(gethttpheaders()),Projects[].class);
         model.addAttribute("projects",projectlist.getBody());
 
-        ResponseEntity<Task[]> tasklist = restTemplate.exchange("http://localhost:8383/tasks", HttpMethod.GET,new HttpEntity<Task>(new HttpHeaders()),Task[].class);
+        ResponseEntity<Task[]> tasklist = restTemplate.exchange("http://localhost:8383/tasks", HttpMethod.GET,new HttpEntity<Task>(gethttpheaders()),Task[].class);
         model.addAttribute("tasks",tasklist.getBody());
 
         model.addAttribute("employee",new Employee());
         model.addAttribute("project",new Projects());
         model.addAttribute("task",new Task());
         model.addAttribute("empProjectTask",new EmpProjectTask());
+        model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
 
         if(status!=null){
             model.addAttribute("status",status);
@@ -52,11 +63,13 @@ public class OperationUiController {
     @RequestMapping(value = "/operations",method = RequestMethod.POST)
     String postAllmapping(@ModelAttribute("projectTask") EmpProjectTask empProjectTask){
 
+        HttpEntity<EmpProjectTask> httpEntity = new HttpEntity<>(empProjectTask,gethttpheaders());
+
         try{
-            ResponseEntity<EmpProjectTask> saveProject = restTemplate.postForEntity("http://localhost:8484/operations",empProjectTask,EmpProjectTask.class);
+            ResponseEntity<EmpProjectTask> saveProject = restTemplate.postForEntity("http://localhost:8484/operations",httpEntity,EmpProjectTask.class);
             status="active";
         }catch (HttpStatusCodeException ex){
-            Logger logger = Logger.getLogger(EmpUiController.class.getName());
+            Logger logger = Logger.getLogger(OperationUiController.class.getName());
             logger.warning(ex.toString());
             status="error";
         }

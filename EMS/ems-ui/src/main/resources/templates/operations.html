@@ -4,32 +4,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
 
     <title>EMS</title>
-
-    <style>
-        ul.stepper li a{
-            padding-bottom:2%;
-        }
-        .selectbtn{
-            margin-left:6%;
-        }
-        .chiph {
-            display:none;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            padding: 0 15px;
-            height: 40px;
-            font-size: 16px;
-            line-height: 40px;
-            border-radius: 25px;
-            background-color: #f1f1f1;
-            margin-left:5%;
-        }
-        option{
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
 <nav class="mb-1 navbar navbar-expand-lg navbar-dark secondary-color lighten-1">
@@ -40,11 +18,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
+            <li class="nav-item">
+                <a class="nav-link" href="/home">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/employees">Employee<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/employees">Employee</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/projects">Projects</a>
@@ -52,8 +30,8 @@
             <li class="nav-item">
                 <a class="nav-link" href="/tasks">Tasks</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/operations">Operations</a>
+            <li class="nav-item active">
+                <a class="nav-link" href="/operations">Operations<span class="sr-only">(current)</span></a>
             </li>
 
         </ul>
@@ -66,9 +44,8 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
                      aria-labelledby="navbarDropdownMenuLink-55">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="#" th:text="${username}"></a>
+                    <a class="dropdown-item" href="#">SignOut</a>
                 </div>
             </li>
         </ul>

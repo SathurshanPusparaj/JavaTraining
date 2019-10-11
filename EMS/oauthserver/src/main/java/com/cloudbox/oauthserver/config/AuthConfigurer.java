@@ -42,7 +42,7 @@ public class AuthConfigurer extends WebSecurityConfigurerAdapter implements Auth
 
     @Override
     public void configure(ClientDetailsServiceConfigurer client) throws Exception {
-        client.inMemory().withClient("web").secret(passwordEncoder.encode("webpass")).scopes("READ","WRITE").authorizedGrantTypes("password","authorization_code").redirectUris("http://localhost:9090/login");
+        client.inMemory().withClient("web").secret(passwordEncoder.encode("webpass")).scopes("READ","WRITE").authorizedGrantTypes("password","authorization_code").redirectUris("http://localhost:9090/login").autoApprove(true);
     }
 
     @Override

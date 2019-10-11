@@ -30,14 +30,25 @@ public class TaskUiController {
 
     String status = null;
 
+    HttpHeaders gethttpheaders(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", AccessTokenConfigurer.getToken());
+        return  httpHeaders;
+    }
+
+    HttpEntity gethttpEntity(){
+        return new HttpEntity<Task>(gethttpheaders());
+    }
+
     @RequestMapping(value = "/tasks",method = RequestMethod.GET)
     String getAllTasks(Model model){
 
         try {
-            ResponseEntity<Task[]> tasklist = restTemplate.exchange("http://localhost:8383/tasks", HttpMethod.GET,new HttpEntity<Task>(new HttpHeaders()),Task[].class);
+            ResponseEntity<Task[]> tasklist = restTemplate.exchange("http://localhost:8383/tasks", HttpMethod.GET,gethttpEntity(),Task[].class);
 
             model.addAttribute("task",new Task());
             model.addAttribute("tasks",tasklist.getBody());
+            model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
         }catch (HttpStatusCodeException ex){
             model.addAttribute("error",ex.toString());
         }
@@ -53,7 +64,7 @@ public class TaskUiController {
     String deletetask(@PathVariable Integer id, Model model){
 
         try{
-            restTemplate.delete("http://localhost:8383/tasks/"+id);
+            restTemplate.exchange("http://localhost:8383/tasks/"+id,HttpMethod.DELETE,gethttpEntity(),Task.class);
             status = "del_active";
         }catch (HttpStatusCodeException ex){
             status ="del_error";
@@ -65,14 +76,16 @@ public class TaskUiController {
     @RequestMapping(value = "/tasks",method = RequestMethod.POST)
     String saveTask(@ModelAttribute("task") Task task){
 
+        HttpEntity<Task> httpEntity = new HttpEntity<>(task,gethttpheaders());
+
         try{
-            ResponseEntity<Task> savetask = restTemplate.postForEntity("http://localhost:8383/tasks",task,Task.class);
+            ResponseEntity<Task> savetask = restTemplate.postForEntity("http://localhost:8383/tasks",httpEntity,Task.class);
             status="active";
         }catch (HttpStatusCodeException ex){
-            Logger logger = Logger.getLogger(EmpUiController.class.getName());
+            Logger logger = Logger.getLogger(TaskUiController.class.getName());
             logger.warning(ex.toString());
             status="error";
         }
-        return "redirect:/tasks";
+        return "redirect:/task_list";
     }
 }
