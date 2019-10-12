@@ -1,0 +1,38 @@
+--------------------------------------
+To get token	[POST]
+
+http://localhost:9191/oauth/token
+
+Authorization
+
+Username web
+Password webpass
+_______________________________
+Body
+
+x-www-form-urlencoded
+
+KEY      	VALUE
+
+grant_type  	password
+username	krish
+password	krishpass
+
+---------------------------------
+To check token	[GET]
+
+http://localhost:9191/oauth/check_token?token=a495c0fe-4151-4934-9932-3409a8d02b2d
+
+----------------------------------
+To get resource from Resource Server	[GET]
+
+Headers
+
+KEY			Value
+Authorization      bearer a495c0fe-4151-4934-9932-3409a8d02b2d
+
+_____________________________________________
+Authorization
+
+Username web
+Password webpass

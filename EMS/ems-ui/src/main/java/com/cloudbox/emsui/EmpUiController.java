@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.stereotype.Controller;
@@ -44,7 +45,10 @@ public class EmpUiController {
     }
 
     @RequestMapping(value = "/home",method = RequestMethod.GET)
-    String gethomepage(){
+    String gethomepage(Model model){
+        model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
+        model.addAttribute("privilage",AccessTokenConfigurer.getAuthorities());
+
         return "home";
     }
 
@@ -56,6 +60,7 @@ public class EmpUiController {
         model.addAttribute("employee",new Employee());
         model.addAttribute("employees",emplist.getBody());
         model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
+        model.addAttribute("privilage",AccessTokenConfigurer.getAuthorities());
         model.addAttribute("error",null);
 
         if(status!=null){
@@ -80,6 +85,7 @@ public class EmpUiController {
 
         return "redirect:/employees";
     }
+
     @RequestMapping(value = "/employees/delete/{id}",method = RequestMethod.GET)
     String deleteEmployee(@PathVariable Integer id){
 
@@ -104,6 +110,13 @@ public class EmpUiController {
 
         model.addAttribute("employee",employee.getBody());
         model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
+        model.addAttribute("privilage",AccessTokenConfigurer.getAuthorities());
+
         return "employee_info";
     }
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    void logout(){
+
+    }
+
 }

@@ -7,6 +7,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -18,13 +21,14 @@ public class Config extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/")
                 .permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated().and().logout().invalidateHttpSession(true).clearAuthentication(true)
+                .deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+                .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }
 
     @Bean
     RestTemplate getRestTemplate(){
         return new RestTemplate();
     }
-
 
 }

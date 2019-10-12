@@ -49,6 +49,7 @@ public class TaskUiController {
             model.addAttribute("task",new Task());
             model.addAttribute("tasks",tasklist.getBody());
             model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
+            model.addAttribute("privilage",AccessTokenConfigurer.getAuthorities());
         }catch (HttpStatusCodeException ex){
             model.addAttribute("error",ex.toString());
         }
@@ -71,7 +72,7 @@ public class TaskUiController {
             Logger logger = Logger.getLogger(TaskUiController.class.getName());
             logger.warning(ex.toString());
         }
-        return "redirect:/task_list";
+        return "redirect:/tasks";
     }
     @RequestMapping(value = "/tasks",method = RequestMethod.POST)
     String saveTask(@ModelAttribute("task") Task task){
@@ -86,6 +87,6 @@ public class TaskUiController {
             logger.warning(ex.toString());
             status="error";
         }
-        return "redirect:/task_list";
+        return "redirect:/tasks";
     }
 }

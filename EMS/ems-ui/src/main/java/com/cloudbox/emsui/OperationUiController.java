@@ -51,6 +51,7 @@ public class OperationUiController {
         model.addAttribute("task",new Task());
         model.addAttribute("empProjectTask",new EmpProjectTask());
         model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
+        model.addAttribute("privilage",AccessTokenConfigurer.getAuthorities());
 
         if(status!=null){
             model.addAttribute("status",status);

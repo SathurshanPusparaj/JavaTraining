@@ -11,6 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,24 +35,23 @@ public class EmployeeController {
     @Autowired
     EmployeeServiceInf employeeServiceInf;
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @RequestMapping(value = "/employees",method = RequestMethod.POST)
     Employee saveEmployee(@RequestBody Employee employee){
         return employeeServiceInf.save(employee);
     }
-
 
     @RequestMapping(value = "/employees/{id}",method = RequestMethod.GET)
     Optional<Employee> findEmployeeById(@PathVariable Integer id){
         return employeeServiceInf.findbyid(id);
     }
 
-
     @RequestMapping(value = "/employees",method = RequestMethod.GET)
     List<Employee> findAllEmployee(){
         return employeeServiceInf.findAll();
     }
 
-
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @RequestMapping(value = "/employees/{id}",method = RequestMethod.DELETE)
     void deleteEmployee(@PathVariable Integer id){
         try{

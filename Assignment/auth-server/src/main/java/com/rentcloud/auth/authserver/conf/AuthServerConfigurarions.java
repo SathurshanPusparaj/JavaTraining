@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -19,14 +22,14 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 @Configuration
-public class AuthServerConfigurarions extends WebSecurityConfigurerAdapter implements AuthorizationServerConfigurer {
+public class AuthServerConfigurarions extends WebSecurityConfigurerAdapter  implements AuthorizationServerConfigurer{
 
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-    @Bean
+   @Bean
     public TokenStore tokenStore(){
          return new InMemoryTokenStore();
     }
@@ -51,7 +54,7 @@ public class AuthServerConfigurarions extends WebSecurityConfigurerAdapter imple
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoint) throws Exception {
-        endpoint.authenticationManager(authenticationManager).tokenStore(tokenStore);
-
+        endpoint.authenticationManager(authenticationManager);
+        endpoint.tokenStore(tokenStore);
     }
 }

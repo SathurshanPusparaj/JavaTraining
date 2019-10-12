@@ -31,7 +31,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/tasks">Tasks</a>
             </li>
-            <li class="nav-item">
+            <li th:if="${privilage==true}" class="nav-item">
                 <a class="nav-link" href="/operations">Operations</a>
             </li>
 
@@ -40,8 +40,7 @@
             <li class="nav-item avatar dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0"
-                         alt="avatar image" width="50" height="50">
+                    <i class="fas fa-user fa-2x rounded-circle z-depth-0"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
                      aria-labelledby="navbarDropdownMenuLink-55">
@@ -53,19 +52,20 @@
     </div>
 </nav>
 
-<div class="fab" data-toggle="modal" data-target="#modalCart"> + </div>
+
+<div class="fab" data-toggle="modal" data-target="#modalCart" th:if="${privilage==true}"> + </div>
 
 <section class="mx-5 mb-4 pb-3" style="margin-top: 3%;">
     <div class="card empshow" th:each="item:${employees}"><div class="card-body">
             <span th:text="${item.firstName}+' '+${item.lastName}"></span>
            <a th:href="@{/employees/{id}(id=${item.empid})}"><i class="material-icons">send</i></a>
-           <a th:href="@{/employees/delete/{id}(id=${item.empid})}" style="margin-right: 2%;"><i class="material-icons">delete_outline</i></a>
+           <a th:if="${privilage==true}" th:href="@{/employees/delete/{id}(id=${item.empid})}" style="margin-right: 2%;"><i class="material-icons">delete_outline</i></a>
         </div>
     </div>
 </section>
 
 <div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+     aria-hidden="true" th:if="${privilage==true}">
     <div class="modal-dialog   modal-notify modal-info" role="document" style="padding-bottom: 1rem;">
         <div class="modal-content">
             <form id="contact-form" name="contact-form" th:action="@{/employees}" th:object="${employee}" method="POST">

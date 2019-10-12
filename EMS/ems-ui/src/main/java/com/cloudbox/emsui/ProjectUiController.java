@@ -47,6 +47,8 @@ public class ProjectUiController {
             model.addAttribute("project",new Projects());
             model.addAttribute("projects",projectlist.getBody());
             model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
+            model.addAttribute("privilage",AccessTokenConfigurer.getAuthorities());
+
         }catch (HttpStatusCodeException ex){
             model.addAttribute("error",ex.toString());
         }
@@ -80,6 +82,7 @@ public class ProjectUiController {
             ResponseEntity<Projects> project = restTemplate.exchange("http://localhost:8282/projects/"+id, HttpMethod.GET,gethttpEntity(),Projects.class);
             model.addAttribute("findproject",project.getBody());
             model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
+            model.addAttribute("privilage",AccessTokenConfigurer.getAuthorities());
         }catch (HttpStatusCodeException ex){
             Logger logger = Logger.getLogger(ProjectUiController.class.getName());
             logger.warning(ex.toString());
