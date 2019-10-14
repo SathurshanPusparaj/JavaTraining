@@ -2,6 +2,7 @@ package com.cloudbox.emsui;
 
 import com.cloudbox.models_service.models.Employee;
 import com.cloudbox.models_service.models.ProjectTask;
+import com.cloudbox.models_service.models.Projects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
@@ -104,19 +105,19 @@ public class EmpUiController {
 
         ResponseEntity<Employee> employee = restTemplate.exchange("http://localhost:8181/employees/"+id, HttpMethod.GET,gethttpEntity(),Employee.class);
 
-       for(ProjectTask projectTask:employee.getBody().getProjectTasks()){
-            System.out.println(projectTask.getEmpProjectTask().getPid());
+        ResponseEntity<Projects[]> projects = restTemplate.exchange("http://localhost:8181/employees/"+id+"/projects", HttpMethod.GET,new HttpEntity<Projects>(gethttpheaders()),Projects[].class);
+
+        for (Projects p:projects.getBody()){
+            System.out.println(p.toString());
         }
 
+
         model.addAttribute("employee",employee.getBody());
+        model.addAttribute("projects",projects.getBody());
         model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
         model.addAttribute("privilage",AccessTokenConfigurer.getAuthorities());
 
         return "employee_info";
-    }
-    @RequestMapping(value = "/logout",method = RequestMethod.GET)
-    void logout(){
-
     }
 
 }

@@ -22,7 +22,7 @@ public class Config extends WebSecurityConfigurerAdapter {
                 .antMatchers("/")
                 .permitAll()
                 .anyRequest().authenticated().and().logout().invalidateHttpSession(true).clearAuthentication(true)
-                .deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+                .deleteCookies("JSESSIONID").deleteCookies("KSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
                 .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }
 

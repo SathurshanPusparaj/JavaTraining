@@ -1,6 +1,7 @@
 package com.cloudbox.emsservice.Controller;
 
 import com.cloudbox.emsservice.Service.EmployeeServiceInf;
+import com.cloudbox.emsservice.config.AccessTokenConfigurer;
 import com.cloudbox.models_service.models.Employee;
 import com.cloudbox.models_service.models.ProjectTask;
 import com.cloudbox.models_service.models.Projects;
@@ -35,6 +36,13 @@ public class EmployeeController {
     @Autowired
     EmployeeServiceInf employeeServiceInf;
 
+    HttpHeaders getHttpHeaders(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Authorization",AccessTokenConfigurer.getAccessToken());
+        return httpHeaders;
+    }
+
+
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @RequestMapping(value = "/employees",method = RequestMethod.POST)
     Employee saveEmployee(@RequestBody Employee employee){
@@ -64,15 +72,14 @@ public class EmployeeController {
 
     @RequestMapping(value = "/employees/{id}/projects",method = RequestMethod.GET)
     List<Projects> getEmployeeProjects(@PathVariable Integer id){
-
-        ResponseEntity<Projects[]> projectlist = restTemplate.exchange("http://localhost:8484/operations/employees/"+id+"/projects", HttpMethod.GET,new HttpEntity<Projects>(new HttpHeaders()),Projects[].class);
+        ResponseEntity<Projects[]> projectlist = restTemplate.exchange("http://localhost:8484/operations/employees/"+id+"/projects", HttpMethod.GET,new HttpEntity<Projects>(getHttpHeaders()),Projects[].class);
 
         return Arrays.asList(projectlist.getBody());
     }
 
     @RequestMapping(value = "/employees/{eid}/projects/{pid}",method = RequestMethod.GET)
     List<Task> getTask(@PathVariable Integer eid,@PathVariable Integer pid){
-        ResponseEntity<Task[]> tasklist = restTemplate.exchange("http://localhost:8484/operations/employees/"+eid+"/projects/"+pid, HttpMethod.GET,new HttpEntity<Task>(new HttpHeaders()),Task[].class);
+        ResponseEntity<Task[]> tasklist = restTemplate.exchange("http://localhost:8484/operations/employees/"+eid+"/projects/"+pid, HttpMethod.GET,new HttpEntity<Task>(getHttpHeaders()),Task[].class);
 
         return Arrays.asList(tasklist.getBody());
     }
