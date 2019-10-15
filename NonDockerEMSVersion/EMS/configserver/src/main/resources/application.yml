@@ -1,0 +1,6 @@
+server:
+  port: 8787
+
+spring:
+  profiles:
+    active: native

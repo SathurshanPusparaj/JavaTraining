@@ -1,0 +1,27 @@
+insert into employee (first_name,last_name,designation,dob,email,phone_number) values ('rahul','raja','engineer','1994-6-3','rahul01@gmail.com',01756328523);
+
+insert into employee (first_name,last_name,designation,dob,email,phone_number) values ('fabi','milan','senior engineer','1991-5-3','fabiyan@gmail.com',0552283244);
+
+insert into project_task(employee_empid,projects_pid,task_tid) values(1,1,1);
+
+ <option style="padding:0;padding-left:2%;" value="welcome"> welcome</option>
+                            <option style="padding:0;padding-left:2%;" value="world"> world</option> <option style="padding:0;padding-left:2%;" value="welcome"> welcome</option>
+                            <option style="padding:0;padding-left:2%;" value="world"> world</option>
+							
+							
+				<div class="step-content" style="padding:0;">
+                    <div style="display: flex;">
+                    <p style="margin-left:10%;margin-right:5%;margin-bottom:0;display:block;">Task Name</p>
+
+                    <div class="chiph"  id="mdc-chip-2" style="display:none;margin-left:20%;">
+                       </i> <span id="taskchip"></span>
+                    </div>
+                    </div>
+                    <div id="thirdstep">
+                        <select class="selectpicker col-12" data-live-search="true" id="tasklist" >
+                              <!--<option th:each="taskitem:${tasks}" th:text="${taskitem.taskName}" style="padding:0;padding-left:2%;"></option>-->
+                              <option style="padding:0;padding-left:2%;" value="welcome"> welcome</option>
+                            <option style="padding:0;padding-left:2%;" value="world"> world</option>
+                         </select>
+                    </div>
+                </div>

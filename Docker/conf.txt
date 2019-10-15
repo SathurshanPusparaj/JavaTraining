@@ -38,9 +38,18 @@ docker images prune // remove all images
 
 sudo docker create network [networkname]
 
-sudo docker --name=[appname] --network=[networkname] -p 8080:8080 [run-app image]
+sudo docker run --name=[appname] --network=[networkname] -p 8080:8080 [run-app image]
 
 sudo docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=1qaz2wsx@ -e MYSQL_DATABASE=authDB -e MYSQL_USER=user -e MYSQL_PASSWORD=1234 -d --network [created network] mysql:5.7.26
+
+-----pushing to dockerhub------------
+
+sudo docker tag [imagename] [username]/[repository name]:[imagename<anyname>]
+sudo docker login
+sudo docker push [username]/[repository name]:[imagename<anyname>]
+
+------pull from dockerhub----------
+docker pull sathurshanpusparaj/ems:[imagename<anyname>]
 
  References
  https://stackabuse.com/dockerizing-a-spring-boot-application/

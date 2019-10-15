@@ -1,0 +1,36 @@
+sudo docker build -t configserver .
+sudo docker run --name=emsconfigserver --net=mynet -p 8787:8787 configserver
+
+sudo docker build -t oauthserver .
+sudo docker run --name=dockeroauth --net=mynet -p 8686:8686 oauthserver
+
+sudo docker build -t  emsui .
+sudo docker run --name=dockerui --net=mynet -p 9090:9090 emsui
+
+sudo docker build -t employeeserver .
+sudo docker run --name=dockeremployee --net=mynet -p 8181:8181 employeeserver
+
+sudo docker build -t operationserver 
+sudo docker run --name=dockeroperation --network=mynet -p 8484:8484 operationserver
+
+sudo docker build -t projectserver .
+sudo docker run --name=dockerproject --network=mynet -p 8282:8282 projectserver
+
+sudo docker build -t taskserver .
+sudo docker run --name=dockertask --network=mynet -p 8383:8383 taskserver
+
+sudo docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=1qaz2wsx@ -e MYSQL_DATABASE=authDB -e MYSQL_USER=user -e MYSQL_PASSWORD=1234 -d --network=mynet mysql
+
+
+
+
+
+
+
+
+
+
+
+
+
+

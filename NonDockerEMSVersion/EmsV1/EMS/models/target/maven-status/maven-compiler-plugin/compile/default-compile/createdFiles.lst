@@ -1,0 +1,6 @@
+com\cloudbox\models_service\models\Employee.class
+com\cloudbox\models_service\models\Projects.class
+com\cloudbox\models_service\models\EmpProjectTask.class
+com\cloudbox\models_service\models\ProjectTask.class
+com\cloudbox\models_service\models\Address.class
+com\cloudbox\models_service\models\Task.class
