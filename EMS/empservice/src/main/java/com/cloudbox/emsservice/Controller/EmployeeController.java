@@ -3,7 +3,6 @@ package com.cloudbox.emsservice.Controller;
 import com.cloudbox.emsservice.Service.EmployeeServiceInf;
 import com.cloudbox.emsservice.config.AccessTokenConfigurer;
 import com.cloudbox.models_service.models.Employee;
-import com.cloudbox.models_service.models.ProjectTask;
 import com.cloudbox.models_service.models.Projects;
 import com.cloudbox.models_service.models.Task;
 import org.springframework.beans.factory.annotation.Autowired;

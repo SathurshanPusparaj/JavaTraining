@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class OperationController {
@@ -47,7 +48,7 @@ public class OperationController {
          return operationService.save(new ProjectTask(emp,project,task));
     }
     @RequestMapping(value = "/operations/employees/{eid}/projects",method = RequestMethod.GET)
-    List<Projects> findProjectsbypid(@PathVariable Integer eid){
+    Set<Projects> findProjectsbypid(@PathVariable Integer eid){
 
         return operationService.findProjectsbyeid(eid);
 

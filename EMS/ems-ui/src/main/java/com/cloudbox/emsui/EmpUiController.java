@@ -1,15 +1,10 @@
 package com.cloudbox.emsui;
 
 import com.cloudbox.models_service.models.Employee;
-import com.cloudbox.models_service.models.ProjectTask;
 import com.cloudbox.models_service.models.Projects;
+import com.cloudbox.models_service.models.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -107,13 +105,18 @@ public class EmpUiController {
 
         ResponseEntity<Projects[]> projects = restTemplate.exchange("http://localhost:8181/employees/"+id+"/projects", HttpMethod.GET,new HttpEntity<Projects>(gethttpheaders()),Projects[].class);
 
-        for (Projects p:projects.getBody()){
-            System.out.println(p.toString());
-        }
+        List<Task[]> tasks = new ArrayList<>();
 
+        if(projects.getBody()!=null){
+            for(Projects p:projects.getBody()){
+                ResponseEntity<Task[]> tsk = restTemplate.exchange("http://localhost:8181/employees/"+id+"/projects/"+p.getPid(), HttpMethod.GET,new HttpEntity<Task>(gethttpheaders()),Task[].class);
+                tasks.add(tsk.getBody());
+            }
+        }
 
         model.addAttribute("employee",employee.getBody());
         model.addAttribute("projects",projects.getBody());
+        model.addAttribute("tasks",tasks);
         model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
         model.addAttribute("privilage",AccessTokenConfigurer.getAuthorities());
 

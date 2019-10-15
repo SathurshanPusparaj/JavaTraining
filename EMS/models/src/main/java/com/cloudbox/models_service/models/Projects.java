@@ -4,9 +4,10 @@ import javax.persistence.*;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-public class Projects {
+public class Projects implements Comparable<Projects>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,5 +100,29 @@ public class Projects {
                 ", status='" + status + '\'' +
                 ", projectTasks=" + projectTasks +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Projects projects = (Projects) o;
+        return Objects.equals(pid, projects.pid) &&
+                Objects.equals(projectName, projects.projectName) &&
+                Objects.equals(projectDescription, projects.projectDescription) &&
+                Objects.equals(startDate, projects.startDate) &&
+                Objects.equals(endDate, projects.endDate) &&
+                Objects.equals(status, projects.status) &&
+                Objects.equals(projectTasks, projects.projectTasks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pid, projectName, projectDescription, startDate, endDate, status, projectTasks);
+    }
+
+    @Override
+    public int compareTo(Projects o) {
+        return this.getPid().compareTo(o.getPid());
     }
 }

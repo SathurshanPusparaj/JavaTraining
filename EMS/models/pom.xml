@@ -11,6 +11,7 @@
     <groupId>com.cloudbox</groupId>
     <artifactId>models</artifactId>
     <version>0.0.1</version>
+    <packaging>jar</packaging>
     <name>models</name>
     <description>Model Service</description>
 

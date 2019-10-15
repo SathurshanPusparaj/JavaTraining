@@ -1,7 +1,7 @@
 package com.cloudbox.emsui;
 
 import com.cloudbox.models_service.models.Employee;
-import com.cloudbox.models_service.models.ProjectTask;
+
 import com.cloudbox.models_service.models.Projects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -69,11 +69,10 @@ public class ProjectUiController {
             ResponseEntity<Projects> saveProject = restTemplate.postForEntity("http://localhost:8282/projects",httpEntity,Projects.class);
             status="active";
         }catch (HttpStatusCodeException ex){
-            Logger logger = Logger.getLogger(ProjectUiController.class.getName());
-            logger.warning(ex.toString());
+            System.out.println(ex.toString());
             status="error";
         }
-        return "redirect:/project_list";
+        return "redirect:/projects";
     }
     @RequestMapping(value = "/projects/{id}",method = RequestMethod.GET)
     String findByidProject(@PathVariable Integer id, Model model){
@@ -84,8 +83,7 @@ public class ProjectUiController {
             model.addAttribute("username",AccessTokenConfigurer.getPrincipalName());
             model.addAttribute("privilage",AccessTokenConfigurer.getAuthorities());
         }catch (HttpStatusCodeException ex){
-            Logger logger = Logger.getLogger(ProjectUiController.class.getName());
-            logger.warning(ex.toString());
+            System.out.println(ex.toString());
         }
         return "project_info";
     }
@@ -97,9 +95,7 @@ public class ProjectUiController {
             status = "del_active";
         }catch (HttpStatusCodeException ex){
             status ="del_error";
-            Logger logger = Logger.getLogger(ProjectUiController.class.getName());
-            logger.warning(ex.toString());
         }
-        return "redirect:/project_list";
+        return "redirect:/projects";
     }
 }

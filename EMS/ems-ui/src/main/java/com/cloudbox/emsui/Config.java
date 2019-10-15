@@ -19,7 +19,7 @@ public class Config extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/")
+                .antMatchers("/","/img/**")
                 .permitAll()
                 .anyRequest().authenticated().and().logout().invalidateHttpSession(true).clearAuthentication(true)
                 .deleteCookies("JSESSIONID").deleteCookies("KSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")

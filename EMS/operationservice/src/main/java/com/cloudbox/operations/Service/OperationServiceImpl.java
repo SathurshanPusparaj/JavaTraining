@@ -7,9 +7,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class OperationServiceImpl {
@@ -21,14 +19,14 @@ public class OperationServiceImpl {
         return operationRepository.save(projectTask);
     }
 
-    public List<Projects> findProjectsbyeid(Integer eid){
+    public Set<Projects> findProjectsbyeid(Integer eid){
 
         ProjectTask pt = new ProjectTask();
         pt.setEmployee(new Employee(eid));
         Example<ProjectTask> examplept = Example.of(pt);
 
         //Iterable<ProjectTask> projectTasksingle = operationRepository.findAll(examplept);
-        List<Projects> projects = new ArrayList<>();
+        Set<Projects> projects = new HashSet<>();
         for (ProjectTask p : operationRepository.findAll(examplept)) {
                 projects.add(p.getProjects());
         }
