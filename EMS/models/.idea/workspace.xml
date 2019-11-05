@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0e33757d-853f-4221-be81-2f1ca29566ac" name="Default Changelist" comment="" />
+    <list default="true" id="0e33757d-853f-4221-be81-2f1ca29566ac" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Generics/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Generics/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Generics/src/A.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Generics/src/com/generices/practiceone/A.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Generics/src/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Generics/src/com/generices/practiceone/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Generics/src/ArrayPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Generics/src/com/generices/practiceone/ArrayPrinter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Generics/src/Bus.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Generics/src/com/generices/practiceone/Bus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Generics/src/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Generics/src/com/generices/practiceone/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Generics/src/Dog.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Generics/src/com/generices/practiceone/Dog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Generics/src/MotorVehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Generics/src/com/generices/practiceone/MotorVehicle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Generics/src/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Generics/src/com/generices/practiceone/Vehicle.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

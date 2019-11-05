@@ -1,3 +1,5 @@
+package com.generices.practiceone;
+
 public class ArrayPrinter {
     public <E> void printArray(E[] array){
         for(E e: array){

@@ -1,3 +1,5 @@
+package com.generices.practiceone;
+
 public class A {
     public void method(){
         System.out.println("class A");
