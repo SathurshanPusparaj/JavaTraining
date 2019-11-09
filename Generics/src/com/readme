@@ -1,3 +1,9 @@
+Generics are a facility of generic programming that extend Java's type system to allow a type or method to operate
+on objects of various types while providing compile-time type safety. In particular, the Java collections framework
+supports generics to specify the type of objects stored in a collection instance.
+
+Generics enable classes, interfaces, and methods to take other classes and interfaces as type parameters.
+
 Benefits of Generic class and interface
 
 Stronger type checks at compile time
