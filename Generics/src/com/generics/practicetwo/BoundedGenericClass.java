@@ -71,6 +71,6 @@ public class BoundedGenericClass {
         BoundedGenericAnimalContainer<Cat> bounded = new BoundedGenericAnimalContainer<>();
         //BoundedGenericAnimalContainer<String> b = new BoundedGenericAnimalContainer<String>();
        //Illegal because String doesn't extends Animal
-        
+
     }
 }

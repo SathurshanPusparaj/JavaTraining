@@ -9,15 +9,14 @@ class Observer{
     }
 }
 
-interface ISubject{
+interface Isubject {
     int getFlag();
     void setFlag(int flag);
     void register(Observer o);
     void unregister(Observer o);
     void notifyObserver();
 }
-
-class Subject implements ISubject{
+class Subject implements Isubject{
 
     List<Observer> observerList = new ArrayList<>();
 
@@ -56,7 +55,7 @@ public class ObserverPatternEx {
     public static void main(String[] args) {
         System.out.println("****Observer Pattern Demo****");
         Observer o1 = new Observer();
-        ISubject iSubject = new Subject();
+        Isubject iSubject = new Subject();
         iSubject.register(o1);
         iSubject.setFlag(5);
         iSubject.setFlag(25);
